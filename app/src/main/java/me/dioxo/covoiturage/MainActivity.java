@@ -1,5 +1,6 @@
 package me.dioxo.covoiturage;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -11,20 +12,21 @@ import androidx.fragment.app.Fragment;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    private TextView mTextMessage;
+import me.dioxo.covoiturage.Fragments.HomeFragment;
+
+public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+            = new BottomNavigationView.OnNavigationItemSelectedListener(){
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    //selectedFragment = new FragmentHome();
+                    selectedFragment = new HomeFragment();
                     break;
-                case R.id.navigation_proposer_trajet:
+                /*case R.id.navigation_proposer_trajet:
 
                     break;
                 case R.id.navigation_rechercher_trajet:
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_mes_trajets_conducteur:
 
-                    break;
+                    break;*/
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -53,4 +55,8 @@ public class MainActivity extends AppCompatActivity {
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
