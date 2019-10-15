@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Covoiturage</string>
+    <string name="title_home">Home</string>
+    <string name="title_proposer_trajet">Proposer un trajet</string>
+    <string name="title_rechercher_trajet">Rechercher un trajet</string>
+    <string name="title_mes_trajets_passager">Mes trajets à aller</string>
+    <string name="title_mes_trajets_conducteur">Mes trajets à conduire</string>
+</resources>

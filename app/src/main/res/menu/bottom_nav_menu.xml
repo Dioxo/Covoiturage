@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_proposer_trajet"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/title_proposer_trajet" />
+
+    <item
+        android:id="@+id/navigation_rechercher_trajet"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/title_rechercher_trajet" />
+
+
+    <item
+        android:id="@+id/navigation_mes_trajets_passager"
+        android:icon="@drawable/ic_map_black_24dp"
+        android:title="@string/title_mes_trajets_passager" />
+
+    <item
+        android:id="@+id/navigation_mes_trajets_conducteur"
+        android:icon="@drawable/ic_directions_car_black_24dp"
+        android:title="@string/title_mes_trajets_conducteur" />
+
+</menu>
