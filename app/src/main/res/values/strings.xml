@@ -5,4 +5,7 @@
     <string name="title_rechercher_trajet">Rechercher un trajet</string>
     <string name="title_mes_trajets_passager">Mes trajets à aller</string>
     <string name="title_mes_trajets_conducteur">Mes trajets à conduire</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
