@@ -53,6 +53,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.bottom_nav);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        chargeFragmentParDefaut();
+    }
+
+    private void chargeFragmentParDefaut() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new HomeFragment()).commit();
     }
 
     @Override
