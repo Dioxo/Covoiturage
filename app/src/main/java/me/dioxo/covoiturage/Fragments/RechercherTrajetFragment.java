@@ -1,6 +1,7 @@
 package me.dioxo.covoiturage.Fragments;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 
@@ -37,7 +39,7 @@ import me.dioxo.covoiturage.R;
  * Use the {@link RechercherTrajetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RechercherTrajetFragment extends Fragment implements  DatePickerDialog.OnDateSetListener{
+public class RechercherTrajetFragment extends Fragment implements  DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -59,6 +61,7 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
     private String mParam2;
     private Calendar calendar;
     private OnFragmentInteractionListener mListener;
+    private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
 
     public RechercherTrajetFragment() {
         // Required empty public constructor
@@ -165,8 +168,65 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
 
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-        date.setText(day + "/" + month + "/" + year);
+        yearFinal = year;
+        monthFinal = month + 1;
+        dayFinal = day;
+
+        calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), this, hour, minute, true);
+
+        timePickerDialog.show();
     }
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        hourFinal = hourOfDay;
+        minuteFinal = minute;
+
+
+        //Formato AAAA-MM-DD HH:MM:SS
+        StringBuilder fecha = formatoFecha();
+
+        date.setText(fecha);
+    }
+
+    private StringBuilder formatoFecha() {
+        //Formato AAAA-MM-DD HH:MM:SS
+
+        StringBuilder fecha = new StringBuilder();
+
+        //first concat year
+        fecha.append(yearFinal).append("-");
+
+        if (monthFinal >= 10) {
+            fecha.append(monthFinal).append("-");
+        } else {
+            fecha.append(0).append(monthFinal).append("-");
+        }
+
+        if (dayFinal >= 10) {
+            fecha.append(dayFinal).append(" ");
+        } else {
+            fecha.append(0).append(dayFinal).append(" ");
+        }
+
+        if (hourFinal >= 10) {
+            fecha.append(hourFinal).append(":");
+        } else {
+            fecha.append(0).append(hourFinal).append(":");
+        }
+
+        if (minuteFinal >= 10) {
+            fecha.append(minuteFinal);
+        } else {
+            fecha.append(0).append(minuteFinal);
+        }
+
+        return fecha;
+    }
+
 
 
     /**
