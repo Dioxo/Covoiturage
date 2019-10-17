@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.ProposerTrajetFragment">
+
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/open_sans_bold"
-        android:text="Rechercher un trajet"
+        android:text="Proposer un trajet"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintEnd_toEndOf="parent"
