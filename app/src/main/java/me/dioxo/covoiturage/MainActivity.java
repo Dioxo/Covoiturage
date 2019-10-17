@@ -13,10 +13,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import me.dioxo.covoiturage.Fragments.HomeFragment;
+import me.dioxo.covoiturage.Fragments.ProposerTrajetFragment;
 import me.dioxo.covoiturage.Fragments.RechercherTrajetFragment;
 
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
-                                        RechercherTrajetFragment.OnFragmentInteractionListener{
+                                        RechercherTrajetFragment.OnFragmentInteractionListener,
+                                        ProposerTrajetFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -31,10 +33,10 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 case R.id.navigation_rechercher_trajet:
                     selectedFragment = new RechercherTrajetFragment();
                     break;
-                /*case R.id.navigation_proposer_trajet:
-
+                case R.id.navigation_proposer_trajet:
+                    selectedFragment = new ProposerTrajetFragment();
                     break;
-                case R.id.navigation_mes_trajets_passager:
+                /*case R.id.navigation_mes_trajets_passager:
 
                     break;
                 case R.id.navigation_mes_trajets_conducteur:
