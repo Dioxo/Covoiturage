@@ -2,6 +2,8 @@ package me.dioxo.covoiturage;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,10 +16,25 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView textView;
+        public TextView txtRoute;
+        public TextView txtConducteur;
+        public TextView txtTelephone;
+        public TextView txtHeure;
+        public TextView txtPrix;
+        public TextView txtMarque;
+        public ImageView imageView;
+        public Button btnOptions;
+
         public MyViewHolder(CardView v) {
             super(v);
-            textView = v.findViewById(R.id.text_test);
+            txtConducteur = v.findViewById(R.id.txt_conducteur);
+            txtRoute = v.findViewById(R.id.txt_route);
+            txtTelephone = v.findViewById(R.id.txt_telephone);
+            txtHeure = v.findViewById(R.id.txt_heure);
+            txtPrix = v.findViewById(R.id.txt_prix);
+            txtMarque = v.findViewById(R.id.txt_marque);
+            imageView = v.findViewById(R.id.img_voitures);
+            btnOptions = v.findViewById(R.id.btn_options);
         }
     }
 
@@ -28,7 +45,7 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
 
     @NonNull
     @Override
-    public AdapterVoitures.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // create a new view
         CardView v = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_voiture, parent, false);
@@ -40,8 +57,8 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterVoitures.MyViewHolder holder, int position) {
-        holder.textView.setText(mDataset[position]);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        holder.txtRoute.setText(mDataset[position]);
     }
 
     @Override

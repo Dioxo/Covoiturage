@@ -131,14 +131,14 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
 
 
         //set recycler view
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
         layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        String dataSet[] = {"Hola", "Perra"};
+        String dataSet[] = {"Hola", "Perra", "Sucia"};
         mAdapter = new AdapterVoitures(dataSet);
         recyclerView.setAdapter(mAdapter);
 
