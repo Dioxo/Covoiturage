@@ -6,7 +6,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +17,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +26,7 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import me.dioxo.covoiturage.AdapterVoitures;
 import me.dioxo.covoiturage.R;
 
 /**
@@ -39,7 +37,7 @@ import me.dioxo.covoiturage.R;
  * Use the {@link RechercherTrajetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RechercherTrajetFragment extends Fragment implements  DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class RechercherTrajetFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -54,6 +52,8 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
     EditText date;
     @BindView(R.id.prix)
     EditText prix;
+    @BindView(R.id.recycler_view_voitures)
+    RecyclerView recyclerView;
 
 
     // TODO: Rename and change types of parameters
@@ -62,6 +62,9 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
     private Calendar calendar;
     private OnFragmentInteractionListener mListener;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
+
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     public RechercherTrajetFragment() {
         // Required empty public constructor
@@ -116,15 +119,28 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
 
 
         //chaque fois qu'on click, on va selectionner la date
-        date.setOnClickListener(view1 -> selectDate() );
+        date.setOnClickListener(view1 -> selectDate());
         date.setOnFocusChangeListener((view1, hasFocus) -> {
-            if(hasFocus) {
+            if (hasFocus) {
                 selectDate();
             }
         });
 
         spinnerArrive.setAdapter(arrayAdapter);
         spinnerDepart.setAdapter(arrayAdapter);
+
+
+        //set recycler view
+        recyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        // specify an adapter (see also next example)
+        String dataSet[] = {"Hola", "Perra"};
+        mAdapter = new AdapterVoitures(dataSet);
+        recyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -154,7 +170,6 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
     }
 
 
-
     public void selectDate() {
         calendar = Calendar.getInstance();
 
@@ -180,6 +195,7 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
 
         timePickerDialog.show();
     }
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         hourFinal = hourOfDay;
@@ -226,7 +242,6 @@ public class RechercherTrajetFragment extends Fragment implements  DatePickerDia
 
         return fecha;
     }
-
 
 
     /**

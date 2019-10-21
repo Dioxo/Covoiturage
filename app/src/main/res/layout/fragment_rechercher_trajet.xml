@@ -107,15 +107,33 @@
 
 
     <ImageButton
+        android:id="@+id/imageButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/search_round_blue"
         android:src="@drawable/ic_search_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/prix"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/prix" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageButton"
+        app:layout_constraintVertical_bias="0.061">
+
+        <include
+            layout="@layout/recycler_view_voitures"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
