@@ -14,9 +14,9 @@
         android:layout_height="match_parent">
 
         <ImageButton
+            android:id="@+id/btn_cancel"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/search_round_blue"
             android:src="@drawable/ic_cancel_black_24dp"
             android:layout_gravity="end"/>
 

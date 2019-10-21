@@ -28,6 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dioxo.covoiturage.AdapterVoitures;
 import me.dioxo.covoiturage.R;
+import me.dioxo.covoiturage.Trajet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -138,8 +139,17 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
         recyclerView.setLayoutManager(layoutManager);
 
         // specify an adapter (see also next example)
-        String dataSet[] = {"Hola", "Perra", "Sucia"};
-        mAdapter = new AdapterVoitures(dataSet);
+        ArrayList<Trajet> trajets = new ArrayList<Trajet>();
+        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
+                "14h 30", "20$", "Camaro 5"));
+
+        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
+                "14h 30", "20$", "Camaro 5"));
+
+        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
+                "14h 30", "20$", "Camaro 5"));
+
+        mAdapter = new AdapterVoitures(trajets);
         recyclerView.setAdapter(mAdapter);
 
         return view;
