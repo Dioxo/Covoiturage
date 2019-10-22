@@ -64,10 +64,11 @@ public class RechercherTrajetFragment extends Fragment
 
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    @BindView(R.id.btnRechercherTrajet)
-    ImageButton btnRechercherTrajet;
+
     @BindView(R.id.container)
     ConstraintLayout container;
+    @BindView(R.id.recycler_view_voitures)
+    RecyclerView recyclerView;
     private RechercherTrajetPresenter presenter;
 
 
@@ -80,7 +81,7 @@ public class RechercherTrajetFragment extends Fragment
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-    private RecyclerView recyclerView;
+
     public RechercherTrajetFragment() {
         // Required empty public constructor
     }
@@ -124,9 +125,6 @@ public class RechercherTrajetFragment extends Fragment
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rechercher_trajet, container, false);
         ButterKnife.bind(this, view);
-
-        View include = inflater.inflate(R.layout.recycler_view_voitures, container, false);
-        recyclerView = include.findViewById(R.id.recycler_view_voitures);
 
         //create Presenter
         presenter = new RechercherTrajetPresenterImpl(this);

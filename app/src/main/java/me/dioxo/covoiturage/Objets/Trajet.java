@@ -71,4 +71,17 @@ public class Trajet {
     public String getMarque() {
         return marque;
     }
+
+    @Override
+    public String toString() {
+        return "Trajet{" +
+                "depart='" + depart + '\'' +
+                ", arrive='" + arrive + '\'' +
+                ", nomConducteur='" + nomConducteur + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", heure='" + heure + '\'' +
+                ", prix='" + prix + '\'' +
+                ", marque='" + marque + '\'' +
+                '}';
+    }
 }

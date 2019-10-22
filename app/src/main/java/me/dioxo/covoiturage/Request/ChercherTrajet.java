@@ -1,5 +1,7 @@
 package me.dioxo.covoiturage.Request;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -19,15 +21,8 @@ public class ChercherTrajet  extends StringRequest {
 
     private Map<String, String > parametres;
 
-    public ChercherTrajet(Response.Listener<String> listener, @Nullable Response.ErrorListener errorListener, @NonNull Trajet trajet) {
-        super(Method.GET, Routes.SERVER_ROUTE,listener,errorListener);
-
-        parametres = new HashMap<>();
-        parametres.put(Constantes.depart.toString(), trajet.getDepart());
-        parametres.put(Constantes.arrive.toString(), trajet.getArrive());
-        parametres.put(Constantes.heure.toString(), trajet.getHeure());
-        parametres.put(Constantes.prix.toString(), trajet.getPrix());
-
+    public ChercherTrajet(Response.Listener<String> listener, @Nullable Response.ErrorListener errorListener, @NonNull Trajet trajet,String url) {
+        super(Method.POST, url,listener,errorListener);
     }
 
     @Override
