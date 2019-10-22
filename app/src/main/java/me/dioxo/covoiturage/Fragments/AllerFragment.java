@@ -20,6 +20,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dioxo.covoiturage.Adapter.AdapterVoitures;
 import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.Presenter.AllerPresenter;
+import me.dioxo.covoiturage.Presenter.AllerPresenterImpl;
 import me.dioxo.covoiturage.R;
 
 
@@ -43,6 +45,7 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private AllerPresenter presenter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -81,12 +84,21 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_aller, container, false);
         ButterKnife.bind(this, view);
 
+        presenter = new AllerPresenterImpl(this);
+        presenter.onCreate();
+        presenter.chercherTrajets();
         return view;
     }
 
@@ -118,6 +130,7 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
     public void afficherTrajets(ArrayList<Trajet> trajets) {
         if (trajets.size() == 0) {
             //Il n'y a pas de trajets
+            showError("Vous avez pas de trajets à faire");
         } else {
             recyclerViewVoitures.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getContext());
