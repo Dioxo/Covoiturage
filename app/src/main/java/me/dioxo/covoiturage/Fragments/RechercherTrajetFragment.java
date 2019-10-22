@@ -294,7 +294,7 @@ public class RechercherTrajetFragment extends Fragment
             layoutManager = new LinearLayoutManager(getContext());
             recyclerView.setLayoutManager(layoutManager);
 
-            mAdapter = new AdapterVoitures(trajets);
+            mAdapter = new AdapterVoitures(trajets, 0 , this::choisirTrajet);
             recyclerView.setAdapter(mAdapter);
         }
 
@@ -308,6 +308,12 @@ public class RechercherTrajetFragment extends Fragment
     @Override
     public void showError(String message) {
         Snackbar.make(container, message, Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    public void choisirTrajet(Trajet trajet) {
+        Snackbar.make(container, "TRAJET CHOISI" + trajet, Snackbar.LENGTH_SHORT)
                 .show();
     }
 

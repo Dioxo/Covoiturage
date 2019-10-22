@@ -14,4 +14,5 @@ public interface RechercherTrajetView {
     void afficherTrajets(ArrayList<Trajet> trajets);
     void chercher(Trajet trajet);
     void showError(String message);
+    void choisirTrajet(Trajet trajet);
 }

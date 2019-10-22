@@ -1,29 +1,47 @@
-package me.dioxo.covoiturage;
+package me.dioxo.covoiturage.Fragments;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import me.dioxo.covoiturage.Adapter.AdapterVoitures;
+import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.R;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link AllerFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link AllerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AllerFragment extends Fragment {
+public class AllerFragment extends Fragment implements AllerFragmentView{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    @BindView(R.id.recycler_view_voitures)
+    RecyclerView recyclerViewVoitures;
+    @BindView(R.id.container)
+    FrameLayout container;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -66,7 +84,10 @@ public class AllerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_aller, container, false);
+        View view = inflater.inflate(R.layout.fragment_aller, container, false);
+        ButterKnife.bind(this, view);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -92,6 +113,37 @@ public class AllerFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    @Override
+    public void afficherTrajets(ArrayList<Trajet> trajets) {
+        if (trajets.size() == 0) {
+            //Il n'y a pas de trajets
+        } else {
+            recyclerViewVoitures.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewVoitures.setLayoutManager(layoutManager);
+
+            mAdapter = new AdapterVoitures(trajets, 1, (type, trajet) -> {
+                if(type == 1){
+                    cancelerTrajet(trajet);
+                }
+            });
+            recyclerViewVoitures.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    public void cancelerTrajet(Trajet trajet) {
+        Snackbar.make(container, "TRAJET A CANCELER" + trajet, Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    /*@Override
+    public void onBtnClicked(int type, Trajet trajet) {
+        if (type == 1) {
+            cancelerTrajet(trajet);
+        }
+    }*/
 
     /**
      * This interface must be implemented by activities that contain this

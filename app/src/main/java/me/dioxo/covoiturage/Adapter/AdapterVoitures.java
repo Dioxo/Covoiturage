@@ -19,7 +19,23 @@ import me.dioxo.covoiturage.R;
 
 public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyViewHolder> {
     private ArrayList<Trajet> trajets;
+    //si type = 0, rechercher voitures
+    //si type = 1, aller
+    //si type = 2, conduire
+    private int type;
 
+    public interface OnItemClickListener {
+        void onBtnClicked( Trajet trajet);
+    }
+
+    private final OnItemClickListener listener;
+
+    // Provide a suitable constructor (depends on the kind of dataset)
+    public AdapterVoitures(ArrayList<Trajet> trajets, int type,OnItemClickListener listener) {
+        this.trajets = trajets;
+        this.type = type;
+        this.listener = listener;
+    }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -47,10 +63,7 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public AdapterVoitures(ArrayList<Trajet> trajets) {
-        this.trajets = trajets;
-    }
+
 
     @NonNull
     @Override
@@ -67,7 +80,6 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
         String trajet = trajets.get(position).getDepart() +
                                                 " - " +
                                 trajets.get(position).getArrive();
@@ -93,11 +105,29 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
                 break;
         }
 
-        holder.btnOptions.setText("Choisir");
+        switch (type){
+            case 0: afficherRechercher(holder, position);
+                break;
 
-        if(holder.btnOptions.getText().equals("Choisir")){
-            holder.cancel.setVisibility(View.GONE);
+            case 1: afficherAller(holder, position);
+                break;
         }
+
+
+
+    }
+
+    private void afficherAller(MyViewHolder holder, int position) {
+        holder.btnOptions.setText("Status : " + trajets.get(position).getStatus());
+        holder.cancel.setVisibility(View.VISIBLE);
+
+        holder.btnOptions.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
+    }
+
+    private void afficherRechercher(MyViewHolder holder, int position) {
+        holder.cancel.setVisibility(View.GONE);
+        holder.btnOptions.setText("Choisir");
+        holder.btnOptions.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
 
     }
 
@@ -105,4 +135,6 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
     public int getItemCount() {
         return trajets.size();
     }
+
+
 }
