@@ -12,13 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,9 +31,12 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.dioxo.covoiturage.Adapter.AdapterVoitures;
-import me.dioxo.covoiturage.R;
 import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.Presenter.RechercherTrajetPresenter;
+import me.dioxo.covoiturage.Presenter.RechercherTrajetPresenterImpl;
+import me.dioxo.covoiturage.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,13 +46,13 @@ import me.dioxo.covoiturage.Objets.Trajet;
  * Use the {@link RechercherTrajetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RechercherTrajetFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class RechercherTrajetFragment extends Fragment
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener,
+        RechercherTrajetView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    @BindView(R.id.txtTitle)
-    TextView txtTitle;
     @BindView(R.id.spinner_depart)
     Spinner spinnerDepart;
     @BindView(R.id.spinner_arrive)
@@ -53,8 +61,14 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
     EditText date;
     @BindView(R.id.prix)
     EditText prix;
-    @BindView(R.id.recycler_view_voitures)
-    RecyclerView recyclerView;
+
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.btnRechercherTrajet)
+    ImageButton btnRechercherTrajet;
+    @BindView(R.id.container)
+    ConstraintLayout container;
+    private RechercherTrajetPresenter presenter;
 
 
     // TODO: Rename and change types of parameters
@@ -66,7 +80,7 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
+    private RecyclerView recyclerView;
     public RechercherTrajetFragment() {
         // Required empty public constructor
     }
@@ -99,11 +113,24 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_rechercher_trajet, container, false);
         ButterKnife.bind(this, view);
+
+        View include = inflater.inflate(R.layout.recycler_view_voitures, container, false);
+        recyclerView = include.findViewById(R.id.recycler_view_voitures);
+
+        //create Presenter
+        presenter = new RechercherTrajetPresenterImpl(this);
+        presenter.onCreate();
 
         ArrayList<String> locations = new ArrayList<>(
                 Arrays.asList(getResources().getStringArray(R.array.students_locations)));
@@ -130,27 +157,6 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
         spinnerArrive.setAdapter(arrayAdapter);
         spinnerDepart.setAdapter(arrayAdapter);
 
-
-        //set recycler view
-        //recyclerView.setHasFixedSize(true);
-
-        // use a linear layout manager
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-
-        // specify an adapter (see also next example)
-        ArrayList<Trajet> trajets = new ArrayList<Trajet>();
-        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
-                "14h 30", "20$", "Camaro 5"));
-
-        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
-                "14h 30", "20$", "Camaro 5"));
-
-        trajets.add(new Trajet("Marie Curie", "Descartes", "Molinares Alexander", "07 12 34 56 78",
-                "14h 30", "20$", "Camaro 5"));
-
-        mAdapter = new AdapterVoitures(trajets);
-        recyclerView.setAdapter(mAdapter);
 
         return view;
     }
@@ -251,6 +257,69 @@ public class RechercherTrajetFragment extends Fragment implements DatePickerDial
         }
 
         return fecha;
+    }
+
+    @Override
+    public void enableInputs() {
+        spinnerArrive.setEnabled(false);
+        spinnerDepart.setEnabled(false);
+        date.setEnabled(false);
+        prix.setEnabled(false);
+
+    }
+
+    @Override
+    public void disableInputs() {
+        spinnerArrive.setEnabled(true);
+        spinnerDepart.setEnabled(true);
+        date.setEnabled(true);
+        prix.setEnabled(true);
+    }
+
+    @Override
+    public void showProgressBar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void afficherTrajets(ArrayList<Trajet> trajets) {
+        if (trajets.size() == 0) {
+            // TODO Mostrar notificacion que no hay trayectos
+
+        } else {
+            recyclerView.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+
+            mAdapter = new AdapterVoitures(trajets);
+            recyclerView.setAdapter(mAdapter);
+        }
+
+    }
+
+    @Override
+    public void chercher(@NonNull Trajet trajet) {
+        presenter.chercher(trajet);
+    }
+
+    @Override
+    public void showError(String message) {
+        Snackbar.make(container, message, Snackbar.LENGTH_SHORT)
+                .show();
+    }
+
+    @OnClick(R.id.btnRechercherTrajet)
+    public void onViewClicked() {
+        Trajet trajet = new Trajet(spinnerDepart.getSelectedItem().toString(),
+                spinnerArrive.getSelectedItem().toString(),
+                date.getText().toString(),
+                prix.getText().toString());
+        chercher(trajet);
     }
 
 

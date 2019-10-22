@@ -1,13 +1,38 @@
 package me.dioxo.covoiturage.Objets;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+
 public class Trajet {
+    @SerializedName("depart")
+    @Expose
     private String depart;
+    @SerializedName("arrive")
+    @Expose
     private String arrive;
+    @SerializedName("nomConducteur")
+    @Expose
     private String nomConducteur;
+    @SerializedName("telephone")
+    @Expose
     private String telephone;
+    @SerializedName("heure")
+    @Expose
     private String heure;
+    @SerializedName("prix")
+    @Expose
     private String prix;
+    @SerializedName("marque")
+    @Expose
     private String marque;
+
+    public Trajet(String depart, String arrive, String heure, String prix) {
+        this.depart = depart;
+        this.arrive = arrive;
+        this.heure = heure;
+        this.prix = prix;
+    }
 
     public Trajet(String depart, String arrive, String nomConducteur, String telephone, String heure, String prix, String marque) {
         this.depart = depart;
