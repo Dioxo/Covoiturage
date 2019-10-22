@@ -123,11 +123,7 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
             layoutManager = new LinearLayoutManager(getContext());
             recyclerViewVoitures.setLayoutManager(layoutManager);
 
-            mAdapter = new AdapterVoitures(trajets, 1, (type, trajet) -> {
-                if(type == 1){
-                    cancelerTrajet(trajet);
-                }
-            });
+            mAdapter = new AdapterVoitures(trajets, 1, this::cancelerTrajet);
             recyclerViewVoitures.setAdapter(mAdapter);
         }
     }
@@ -138,12 +134,7 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
                 .show();
     }
 
-    /*@Override
-    public void onBtnClicked(int type, Trajet trajet) {
-        if (type == 1) {
-            cancelerTrajet(trajet);
-        }
-    }*/
+
 
     /**
      * This interface must be implemented by activities that contain this
