@@ -134,6 +134,11 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
                 .show();
     }
 
+    @Override
+    public void showError(String message) {
+        Snackbar.make(container, message, Snackbar.LENGTH_SHORT)
+                .show();
+    }
 
 
     /**
