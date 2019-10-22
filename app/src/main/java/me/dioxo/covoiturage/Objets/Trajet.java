@@ -1,4 +1,4 @@
-package me.dioxo.covoiturage;
+package me.dioxo.covoiturage.Objets;
 
 public class Trajet {
     private String depart;

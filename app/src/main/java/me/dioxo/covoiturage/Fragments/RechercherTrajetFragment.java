@@ -26,9 +26,9 @@ import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.dioxo.covoiturage.AdapterVoitures;
+import me.dioxo.covoiturage.Adapter.AdapterVoitures;
 import me.dioxo.covoiturage.R;
-import me.dioxo.covoiturage.Trajet;
+import me.dioxo.covoiturage.Objets.Trajet;
 
 /**
  * A simple {@link Fragment} subclass.

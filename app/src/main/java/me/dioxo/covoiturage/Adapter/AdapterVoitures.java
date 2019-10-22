@@ -1,4 +1,4 @@
-package me.dioxo.covoiturage;
+package me.dioxo.covoiturage.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+
+import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.R;
 
 public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyViewHolder> {
     private ArrayList<Trajet> trajets;
