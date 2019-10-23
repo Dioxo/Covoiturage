@@ -1,5 +1,5 @@
 package me.dioxo.covoiturage.Objets;
 
 public enum Constantes {
-    depart, arrive, heure, prix, id
+    depart, arrive, heure, prix, id, user, password
 }
