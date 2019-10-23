@@ -13,10 +13,5 @@ public interface RechercherTrajetPresenter {
     void afficherTrajets(ArrayList<Trajet> trajets);
     void showError(String error);
 
-    // Users inputs
-    void enableInputs();
-    void disableInputs();
-    void showProgressBar();
-    void hideProgressBar();
 
 }

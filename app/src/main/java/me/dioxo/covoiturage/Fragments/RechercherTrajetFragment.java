@@ -259,19 +259,18 @@ public class RechercherTrajetFragment extends Fragment
 
     @Override
     public void enableInputs() {
-        spinnerArrive.setEnabled(false);
-        spinnerDepart.setEnabled(false);
-        date.setEnabled(false);
-        prix.setEnabled(false);
-
-    }
-
-    @Override
-    public void disableInputs() {
         spinnerArrive.setEnabled(true);
         spinnerDepart.setEnabled(true);
         date.setEnabled(true);
         prix.setEnabled(true);
+    }
+
+    @Override
+    public void disableInputs() {
+        spinnerArrive.setEnabled(false);
+        spinnerDepart.setEnabled(false);
+        date.setEnabled(false);
+        prix.setEnabled(false);
     }
 
     @Override

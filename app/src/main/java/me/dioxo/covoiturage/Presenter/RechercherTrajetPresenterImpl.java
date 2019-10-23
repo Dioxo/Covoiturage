@@ -52,12 +52,18 @@ public class RechercherTrajetPresenterImpl implements  RechercherTrajetPresenter
 
     @Override
     public void chercher(Trajet trajet) {
+        if(view != null){
+            view.disableInputs();
+            view.showProgressBar();
+        }
         model.chercher(trajet);
     }
 
     @Override
     public void afficherTrajets(ArrayList<Trajet> trajets) {
         if(view != null){
+            view.enableInputs();
+            view.hideProgressBar();
             view.afficherTrajets(trajets);
         }
     }
@@ -65,35 +71,10 @@ public class RechercherTrajetPresenterImpl implements  RechercherTrajetPresenter
     @Override
     public void showError(String error) {
         if(view != null){
+            view.enableInputs();
+            view.hideProgressBar();
             view.showError(error);
         }
     }
 
-    @Override
-    public void enableInputs() {
-        if(view != null){
-            view.enableInputs();
-        }
-    }
-
-    @Override
-    public void disableInputs() {
-        if(view != null){
-            view.disableInputs();
-        }
-    }
-
-    @Override
-    public void showProgressBar() {
-        if(view != null){
-            view.showProgressBar();
-        }
-    }
-
-    @Override
-    public void hideProgressBar() {
-        if(view != null){
-            view.hideProgressBar();
-        }
-    }
 }
