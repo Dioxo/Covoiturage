@@ -1,6 +1,5 @@
 package me.dioxo.covoiturage.Model;
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -12,19 +11,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import me.dioxo.covoiturage.Objets.Constantes;
 import me.dioxo.covoiturage.Objets.Routes;
 import me.dioxo.covoiturage.Objets.Trajet;
-import me.dioxo.covoiturage.Presenter.EventRechercher;
-import me.dioxo.covoiturage.Request.ChercherTrajet;
+import me.dioxo.covoiturage.Events.EventRechercher;
 import me.dioxo.covoiturage.libs.ApplicationContextProvider;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;

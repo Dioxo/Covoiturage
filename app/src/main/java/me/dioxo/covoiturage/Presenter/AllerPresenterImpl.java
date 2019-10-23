@@ -4,6 +4,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+import me.dioxo.covoiturage.Events.EventAller;
 import me.dioxo.covoiturage.Fragments.AllerFragmentView;
 import me.dioxo.covoiturage.Model.AllerModel;
 import me.dioxo.covoiturage.Model.AllerModelImpl;

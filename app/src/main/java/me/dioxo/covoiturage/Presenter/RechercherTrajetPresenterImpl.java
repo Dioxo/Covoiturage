@@ -4,6 +4,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
+import me.dioxo.covoiturage.Events.EventRechercher;
 import me.dioxo.covoiturage.Fragments.RechercherTrajetView;
 import me.dioxo.covoiturage.Model.RechercherTrajetModel;
 import me.dioxo.covoiturage.Model.RechercherTrajetModelImpl;

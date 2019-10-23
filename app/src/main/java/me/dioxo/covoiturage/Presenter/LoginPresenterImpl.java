@@ -1,7 +1,11 @@
-package me.dioxo.covoiturage.Activity;
+package me.dioxo.covoiturage.Presenter;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import me.dioxo.covoiturage.Events.LoginEvent;
+import me.dioxo.covoiturage.Activity.LoginView;
+import me.dioxo.covoiturage.Model.LoginModel;
+import me.dioxo.covoiturage.Model.LoginModelImpl;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;
 

@@ -18,6 +18,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.dioxo.covoiturage.MainActivity;
 import me.dioxo.covoiturage.Objets.Constantes;
+import me.dioxo.covoiturage.Presenter.LoginPresenter;
+import me.dioxo.covoiturage.Presenter.LoginPresenterImpl;
 import me.dioxo.covoiturage.R;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {

@@ -1,24 +1,26 @@
-package me.dioxo.covoiturage.Activity;
+package me.dioxo.covoiturage.Events;
 
 import java.util.ArrayList;
 
 import me.dioxo.covoiturage.Objets.Trajet;
 
-class LoginEvent {
-    public static final int LOGIN_ERROR = 0;
-    public static final int LOGIN_SUCCESS = 1;
+public class EventAller {
+    public static final int CHERCHER_ERROR = 0;
+    public static final int CHERCHER_SUCCESS = 1;
 
     private int eventType;
+    private ArrayList<Trajet> trajets;
     private String error;
 
 
     //constructor quand CHERCHER_SUCCESS et list de trajets resultats
-    public LoginEvent(int eventType) {
+    public EventAller(int eventType, ArrayList<Trajet> trajets) {
         this.eventType = eventType;
+        this.trajets = trajets;
     }
 
     //constructor quand CHERCHER_ERROR et le message d'erreur
-    public LoginEvent(int eventType, String error) {
+    public EventAller(int eventType, String error) {
         this.eventType = eventType;
         this.error = error;
     }
@@ -28,6 +30,9 @@ class LoginEvent {
         return eventType;
     }
 
+    public ArrayList<Trajet> getTrajets() {
+        return trajets;
+    }
 
     public String getError() {
         return error;

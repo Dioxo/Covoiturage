@@ -1,4 +1,6 @@
-package me.dioxo.covoiturage.Activity;
+package me.dioxo.covoiturage.Presenter;
+
+import me.dioxo.covoiturage.Events.LoginEvent;
 
 public interface LoginPresenter {
     void loginUser(String userId, String password);

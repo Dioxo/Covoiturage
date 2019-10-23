@@ -1,4 +1,4 @@
-package me.dioxo.covoiturage.Activity;
+package me.dioxo.covoiturage.Model;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -9,13 +9,14 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import me.dioxo.covoiturage.Events.LoginEvent;
 import me.dioxo.covoiturage.Objets.Constantes;
 import me.dioxo.covoiturage.Objets.Routes;
 import me.dioxo.covoiturage.libs.ApplicationContextProvider;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;
 
-class LoginModelImpl implements LoginModel {
+public class LoginModelImpl implements LoginModel {
     EventBus eventBus;
 
     public LoginModelImpl() {

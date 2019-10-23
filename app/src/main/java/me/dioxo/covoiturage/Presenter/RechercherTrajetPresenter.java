@@ -2,6 +2,7 @@ package me.dioxo.covoiturage.Presenter;
 
 import java.util.ArrayList;
 
+import me.dioxo.covoiturage.Events.EventRechercher;
 import me.dioxo.covoiturage.Objets.Trajet;
 
 public interface RechercherTrajetPresenter {
