@@ -1,5 +1,7 @@
 package me.dioxo.covoiturage.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -23,6 +25,8 @@ import me.dioxo.covoiturage.Events.EventRechercher;
 import me.dioxo.covoiturage.libs.ApplicationContextProvider;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class AllerModelImpl implements AllerModel {
     EventBus eventBus;
@@ -61,8 +65,11 @@ public class AllerModelImpl implements AllerModel {
             eventBus.post(event);
         };
 
+        SharedPreferences sharedPref = ApplicationContextProvider.getContext().getSharedPreferences(
+                Constantes.user.toString(), Context.MODE_PRIVATE);
+        String id = sharedPref.getString(Constantes.id.toString(), null);
 
-        String url = Routes.SERVER_ROUTE +"?"+ Constantes.id.toString()+"=1";
+        String url = Routes.SERVER_ROUTE +"?"+ Constantes.id.toString()+"=" + id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, success, errorListener );
 

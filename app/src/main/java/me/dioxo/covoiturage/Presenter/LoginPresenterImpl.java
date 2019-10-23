@@ -9,7 +9,7 @@ import me.dioxo.covoiturage.Model.LoginModelImpl;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;
 
-class LoginPresenterImpl implements LoginPresenter {
+public class LoginPresenterImpl implements LoginPresenter {
     LoginView view;
     EventBus eventBus;
     LoginModel model;

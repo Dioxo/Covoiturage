@@ -1,5 +1,6 @@
 package me.dioxo.covoiturage.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -57,7 +58,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         if(sharedPreferences.contains(String.valueOf(Constantes.id))){
             String id = sharedPreferences.getString(String.valueOf(Constantes.id) , null);
             if(id != null){
-                Log.i("ID", id);
                 goToMainScreen();
             }
         }
@@ -81,10 +81,13 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     private void saveIdUser() {
-        getBaseContext().getSharedPreferences(String.valueOf(Constantes.user), MODE_PRIVATE)
-                .edit()
-                .putString(String.valueOf(Constantes.id), edtIdUser.getText().toString())
-                .apply();
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
+                Constantes.user.toString(), Context.MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(Constantes.id.toString(), edtIdUser.getText().toString());
+        editor.apply();
+
     }
 
     @Override
