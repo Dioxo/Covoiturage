@@ -1,11 +1,16 @@
 package me.dioxo.covoiturage.Presenter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
 import org.greenrobot.eventbus.Subscribe;
 
 import me.dioxo.covoiturage.Events.LoginEvent;
 import me.dioxo.covoiturage.Activity.LoginView;
 import me.dioxo.covoiturage.Model.LoginModel;
 import me.dioxo.covoiturage.Model.LoginModelImpl;
+import me.dioxo.covoiturage.libs.ApplicationContextProvider;
 import me.dioxo.covoiturage.libs.EventBus;
 import me.dioxo.covoiturage.libs.GreenRobotEventBus;
 
@@ -39,6 +44,22 @@ public class LoginPresenterImpl implements LoginPresenter {
     }
 
     @Override
+    public void chercherIfAlreadyConected() {
+        SharedPreferences settings = ApplicationContextProvider.getContext().getSharedPreferences("ID_USER", Context.MODE_PRIVATE);
+        String id_user = settings.getString("ID_USER",null);
+
+        if(id_user  != null) {
+            if (view != null) {
+                Log.i("Session LOl", "Already Connected");
+                Log.i("Session LOl", id_user);
+                view.saveIdUser();
+                view.goToMainScreen();
+            }
+        }
+
+    }
+
+    @Override
     public void onCreate() {
         eventBus.register(this);
     }
@@ -54,6 +75,7 @@ public class LoginPresenterImpl implements LoginPresenter {
         switch(loginEvent.getEventType()){
             case LoginEvent.LOGIN_SUCCESS:
                 if(view != null){
+                    view.saveIdUser();
                     view.goToMainScreen();
                 }
                 break;

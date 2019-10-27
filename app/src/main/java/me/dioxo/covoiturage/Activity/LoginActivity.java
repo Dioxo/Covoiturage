@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,6 +23,7 @@ import me.dioxo.covoiturage.Objets.Constantes;
 import me.dioxo.covoiturage.Presenter.LoginPresenter;
 import me.dioxo.covoiturage.Presenter.LoginPresenterImpl;
 import me.dioxo.covoiturage.R;
+import me.dioxo.covoiturage.libs.ApplicationContextProvider;
 
 public class LoginActivity extends AppCompatActivity implements LoginView {
 
@@ -49,20 +51,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
         presenter = new LoginPresenterImpl(this);
         presenter.onCreate();
-        chercherIfAlreadyConected();
+        presenter.chercherIfAlreadyConected();
     }
 
-    private void chercherIfAlreadyConected() {
-        SharedPreferences sharedPreferences = getBaseContext().getSharedPreferences(String.valueOf(Constantes.user), MODE_PRIVATE);
-
-        if(sharedPreferences.contains(String.valueOf(Constantes.id))){
-            String id = sharedPreferences.getString(String.valueOf(Constantes.id) , null);
-            if(id != null){
-                goToMainScreen();
-            }
-        }
-
-    }
 
     @Override
     public void loginUser() {
@@ -76,16 +67,15 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @Override
     public void goToMainScreen() {
-        saveIdUser();
         startActivity(new Intent(this, MainActivity.class));
     }
 
-    private void saveIdUser() {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(
-                Constantes.user.toString(), Context.MODE_PRIVATE);
+    public void saveIdUser() {
+        SharedPreferences settings = ApplicationContextProvider.getContext().getSharedPreferences("ID_USER", 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("ID_USER", edtIdUser.getText().toString());
 
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString(Constantes.id.toString(), edtIdUser.getText().toString());
+        // Commit the edits!
         editor.apply();
 
     }

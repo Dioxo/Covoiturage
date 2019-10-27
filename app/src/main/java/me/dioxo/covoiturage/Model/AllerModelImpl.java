@@ -65,11 +65,23 @@ public class AllerModelImpl implements AllerModel {
             eventBus.post(event);
         };
 
+        /*
         SharedPreferences sharedPref = ApplicationContextProvider.getContext().getSharedPreferences(
                 Constantes.user.toString(), Context.MODE_PRIVATE);
         String id = sharedPref.getString(Constantes.id.toString(), null);
 
-        String url = Routes.SERVER_ROUTE +"?"+ Constantes.id.toString()+"=" + id;
+
+        Log.i("ID", id);
+        */
+        SharedPreferences settings = ApplicationContextProvider.getContext().getSharedPreferences("ID_USER", 0);
+        String id_user = settings.getString("ID_USER",null);
+
+        if(id_user  != null) {
+            Log.i("Session LOl" , "Already Connected" );
+            Log.i("Session LOl" , id_user);
+        }
+
+        String url = Routes.SERVER_ROUTE +"?"+ Constantes.id.toString()+"=" + id_user;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, success, errorListener );
 
