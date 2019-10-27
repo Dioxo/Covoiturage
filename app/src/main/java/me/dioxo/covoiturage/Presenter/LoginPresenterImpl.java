@@ -52,7 +52,6 @@ public class LoginPresenterImpl implements LoginPresenter {
             if (view != null) {
                 Log.i("Session LOl", "Already Connected");
                 Log.i("Session LOl", id_user);
-                view.saveIdUser();
                 view.goToMainScreen();
             }
         }

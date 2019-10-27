@@ -13,16 +13,23 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Calendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.Presenter.ProposerTrajetPresenter;
+import me.dioxo.covoiturage.Presenter.ProposerTrajetPresenterImpl;
 import me.dioxo.covoiturage.R;
 
 /**
@@ -33,7 +40,7 @@ import me.dioxo.covoiturage.R;
  * Use the {@link ProposerTrajetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-    public class ProposerTrajetFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class ProposerTrajetFragment extends Fragment implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, ProposerTrajetView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,6 +57,10 @@ import me.dioxo.covoiturage.R;
     EditText prix;
     @BindView(R.id.add)
     ImageButton add;
+    @BindView(R.id.progressBar3)
+    ProgressBar progressBar3;
+    @BindView(R.id.container)
+    ConstraintLayout container;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -57,6 +68,8 @@ import me.dioxo.covoiturage.R;
     private Calendar calendar;
     private OnFragmentInteractionListener mListener;
     private int dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
+    private ProposerTrajetPresenter presenter;
+
     public ProposerTrajetFragment() {
         // Required empty public constructor
     }
@@ -96,7 +109,7 @@ import me.dioxo.covoiturage.R;
         ButterKnife.bind(this, view);
 
         ArrayAdapter<CharSequence> arrayAdapter = ArrayAdapter.createFromResource(getContext(),
-                    R.array.students_locations, android.R.layout.simple_spinner_item);
+                R.array.students_locations, android.R.layout.simple_spinner_item);
 
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -108,13 +121,23 @@ import me.dioxo.covoiturage.R;
 
 
         //chaque fois qu'on click, on va selectionner la date
-        date.setOnClickListener(view1 -> selectDate() );
+        date.setOnClickListener(view1 -> selectDate());
         date.setOnFocusChangeListener((view1, hasFocus) -> {
-            if(hasFocus) {
+            if (hasFocus) {
                 selectDate();
             }
         });
+
+        presenter = new ProposerTrajetPresenterImpl(this);
+        presenter.onCreate();
+
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -170,6 +193,12 @@ import me.dioxo.covoiturage.R;
 
     @OnClick(R.id.add)
     public void onViewClicked() {
+        Trajet trajet = new Trajet(spinnerDepart.getSelectedItem().toString(),
+                                    spinnerArrive.getSelectedItem().toString(),
+                                    date.getText().toString(),
+                                    prix.getText().toString(),
+                                    Integer.parseInt(places.getText().toString()));
+        proposerTrajet(trajet);
     }
 
     @Override
@@ -219,6 +248,45 @@ import me.dioxo.covoiturage.R;
         return fecha;
     }
 
+    @Override
+    public void enableInputs() {
+        spinnerDepart.setEnabled(true);
+        spinnerArrive.setEnabled(true);
+        date.setEnabled(true);
+        places.setEnabled(true);
+        prix.setEnabled(true);
+        add.setEnabled(true);
+    }
+
+    @Override
+    public void disableInputs() {
+        spinnerDepart.setEnabled(false);
+        spinnerArrive.setEnabled(false);
+        date.setEnabled(false);
+        places.setEnabled(false);
+        prix.setEnabled(false);
+        add.setEnabled(false);
+    }
+
+    @Override
+    public void showProgressbar() {
+        progressBar3.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        progressBar3.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void proposerTrajet(Trajet trajet) {
+        presenter.proposerTrajet(trajet);
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Snackbar.make(container, message, Snackbar.LENGTH_LONG).show();
+    }
 
 
     /**

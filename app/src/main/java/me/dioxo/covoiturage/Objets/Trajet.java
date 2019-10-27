@@ -29,6 +29,15 @@ public class Trajet {
     @SerializedName("status")
     @Expose
     private String status;
+    private int places;
+
+    public Trajet(String depart, String arrive, String heure, String prix, int places) {
+        this.depart = depart;
+        this.arrive = arrive;
+        this.heure = heure;
+        this.prix = prix;
+        this.places = places;
+    }
 
     public Trajet(String depart, String arrive, String heure, String prix) {
         this.depart = depart;
@@ -47,6 +56,8 @@ public class Trajet {
         this.marque = marque;
         this.status = status;
     }
+
+
 
 
     public String getDepart() {
@@ -79,6 +90,10 @@ public class Trajet {
 
     public String getStatus() {
         return status;
+    }
+
+    public int getPlaces() {
+        return places;
     }
 
     @Override
