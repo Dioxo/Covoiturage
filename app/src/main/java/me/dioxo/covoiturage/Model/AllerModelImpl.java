@@ -13,10 +13,14 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.dioxo.covoiturage.Events.LoginEvent;
 import me.dioxo.covoiturage.Objets.Constantes;
 import me.dioxo.covoiturage.Objets.Routes;
 import me.dioxo.covoiturage.Objets.Trajet;
@@ -82,6 +86,67 @@ public class AllerModelImpl implements AllerModel {
         }
 
         String url = Routes.SERVER_ROUTE +"?"+ Constantes.id.toString()+"=" + id_user;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, success, errorListener );
+
+        RequestQueue request = Volley.newRequestQueue(ApplicationContextProvider.getContext());
+        request.add(stringRequest);
+    }
+
+    @Override
+    public void cancelerTrajet(Trajet trajet) {
+        Response.Listener<String> success = response -> {
+
+            try {
+
+                JSONObject jsonObject = new JSONObject(response);
+                EventAller eventAller;
+
+                // si l'actualisation est effectuée
+
+                if(jsonObject.getBoolean("result")){
+                    eventAller = new EventAller(EventAller.CANCELER_SUCCESS, "Cancelado pues");
+                }else{
+                    eventAller = new EventAller(EventAller.CHERCHER_ERROR, "Nous n'avons pas reussi à canceler votre trajet");
+                }
+
+                eventBus.post(eventAller);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+        };
+
+        Response.ErrorListener  errorListener = error -> {
+            Log.e("Error", error.toString());
+            EventAller event = new EventAller(EventAller.CANCELER_ERROR,
+                    error.toString());
+            eventBus.post(event);
+        };
+
+        /*
+        SharedPreferences sharedPref = ApplicationContextProvider.getContext().getSharedPreferences(
+                Constantes.user.toString(), Context.MODE_PRIVATE);
+        String id = sharedPref.getString(Constantes.id.toString(), null);
+
+
+        Log.i("ID", id);
+        */
+        SharedPreferences settings = ApplicationContextProvider.getContext().getSharedPreferences("ID_USER", 0);
+        String id_user = settings.getString("ID_USER",null);
+
+        if(id_user  != null) {
+            Log.i("Session LOl" , "Already Connected" );
+            Log.i("Session LOl" , id_user);
+        }
+
+        String url = Routes.SERVER_ROUTE +"/aller?"+ Constantes.id.toString()+"=" + id_user+
+                "&"+Constantes.depart.toString()+"="+trajet.getDepart()+
+                "&"+Constantes.arrive.toString()+"="+trajet.getArrive()+
+                "&"+Constantes.heure.toString()+"="+trajet.getHeure();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, success, errorListener );
 

@@ -12,4 +12,6 @@ public interface AllerPresenter {
     void afficherTrajets(ArrayList<Trajet> trajets);
     void showError(String error);
     void chercherTrajets();
+
+    void cancelerTrajet(Trajet trajet);
 }

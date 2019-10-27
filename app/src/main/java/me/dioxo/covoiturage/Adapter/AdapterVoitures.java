@@ -47,7 +47,7 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
         public TextView txtMarque;
         public ImageView carPic;
         public Button btnOptions;
-        public ImageButton cancel;
+        public ImageButton btnCancel;
 
         public MyViewHolder(CardView v) {
             super(v);
@@ -59,7 +59,7 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
             txtMarque = v.findViewById(R.id.txt_marque);
             carPic = v.findViewById(R.id.img_voitures);
             btnOptions = v.findViewById(R.id.btn_options);
-            cancel = v.findViewById(R.id.btn_cancel);
+            btnCancel = v.findViewById(R.id.btn_cancel);
         }
     }
 
@@ -119,13 +119,13 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
 
     private void afficherAller(MyViewHolder holder, int position) {
         holder.btnOptions.setText("Status : " + trajets.get(position).getStatus());
-        holder.cancel.setVisibility(View.VISIBLE);
+        holder.btnCancel.setVisibility(View.VISIBLE);
 
-        holder.btnOptions.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
+        holder.btnCancel.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
     }
 
     private void afficherRechercher(MyViewHolder holder, int position) {
-        holder.cancel.setVisibility(View.GONE);
+        holder.btnCancel.setVisibility(View.GONE);
         holder.btnOptions.setText("Choisir");
         holder.btnOptions.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
 

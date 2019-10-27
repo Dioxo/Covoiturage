@@ -143,8 +143,7 @@ public class AllerFragment extends Fragment implements AllerFragmentView{
 
     @Override
     public void cancelerTrajet(Trajet trajet) {
-        Snackbar.make(container, "TRAJET A CANCELER" + trajet, Snackbar.LENGTH_SHORT)
-                .show();
+        presenter.cancelerTrajet(trajet);
     }
 
     @Override

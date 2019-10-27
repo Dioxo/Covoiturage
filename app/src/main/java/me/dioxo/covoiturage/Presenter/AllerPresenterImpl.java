@@ -40,10 +40,17 @@ public class AllerPresenterImpl implements AllerPresenter {
             case EventAller.CHERCHER_SUCCESS:
                 afficherTrajets(event.getTrajets());
                 break;
+            case EventAller.CANCELER_SUCCESS:
+                showError(event.getError());
+                chercherTrajets();
+                break;
 
             case EventAller.CHERCHER_ERROR:
+            case EventAller.CANCELER_ERROR:
                 showError(event.getError());
                 break;
+
+
 
         }
     }
@@ -66,5 +73,10 @@ public class AllerPresenterImpl implements AllerPresenter {
     @Override
     public void chercherTrajets() {
         model.chercherTrajets();
+    }
+
+    @Override
+    public void cancelerTrajet(Trajet trajet) {
+        model.cancelerTrajet(trajet);
     }
 }

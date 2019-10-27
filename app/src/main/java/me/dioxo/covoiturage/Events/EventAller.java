@@ -7,6 +7,8 @@ import me.dioxo.covoiturage.Objets.Trajet;
 public class EventAller {
     public static final int CHERCHER_ERROR = 0;
     public static final int CHERCHER_SUCCESS = 1;
+    public static final int CANCELER_ERROR = 2;
+    public static final int CANCELER_SUCCESS = 3;
 
     private int eventType;
     private ArrayList<Trajet> trajets;
