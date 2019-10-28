@@ -16,6 +16,7 @@ import me.dioxo.covoiturage.Fragments.AllerFragment;
 import me.dioxo.covoiturage.Fragments.AllerFragmentView;
 import me.dioxo.covoiturage.Fragments.ConduireFragment;
 import me.dioxo.covoiturage.Fragments.HomeFragment;
+import me.dioxo.covoiturage.Fragments.InfoTrajetFragment;
 import me.dioxo.covoiturage.Fragments.ProposerTrajetFragment;
 import me.dioxo.covoiturage.Fragments.RechercherTrajetFragment;
 
@@ -23,7 +24,8 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                                         RechercherTrajetFragment.OnFragmentInteractionListener,
                                         ProposerTrajetFragment.OnFragmentInteractionListener,
                                         AllerFragment.OnFragmentInteractionListener ,
-                                        ConduireFragment.OnFragmentInteractionListener{
+                                        ConduireFragment.OnFragmentInteractionListener,
+                                        InfoTrajetFragment.OnFragmentInteractionListener {
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener(){
