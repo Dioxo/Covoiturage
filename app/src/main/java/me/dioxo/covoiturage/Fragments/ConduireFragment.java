@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -145,8 +146,10 @@ public class ConduireFragment extends Fragment implements ConduireView {
         Snackbar.make(container, "Trajet à conduire " + trajet, Snackbar.LENGTH_SHORT)
                 .show();
 
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new InfoTrajetFragment()).commit();
+        InfoTrajetFragment info = new InfoTrajetFragment();
+        info.setTrajet(trajet);
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                info).commit();
     }
 
     @Override
