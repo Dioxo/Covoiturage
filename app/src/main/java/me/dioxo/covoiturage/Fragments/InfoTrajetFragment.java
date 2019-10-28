@@ -3,19 +3,27 @@ package me.dioxo.covoiturage.Fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import me.dioxo.covoiturage.Adapter.AdapterPassager;
+import me.dioxo.covoiturage.Objets.Passager;
 import me.dioxo.covoiturage.Objets.Trajet;
 import me.dioxo.covoiturage.R;
 
@@ -50,7 +58,10 @@ public class InfoTrajetFragment extends Fragment {
     Button btnOptions;
     @BindView(R.id.recycler_view_passagers)
     RecyclerView recyclerViewPassagers;
-
+    @BindView(R.id.container)
+    LinearLayout container;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager layoutManager;
     private Trajet trajet;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -96,8 +107,22 @@ public class InfoTrajetFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_info_trajet, container, false);
         ButterKnife.bind(this, view);
 
+
+        recyclerViewPassagers.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerViewPassagers.setLayoutManager(layoutManager);
+
+        ArrayList<Passager> passagers = new ArrayList<>();
+        passagers.add(new Passager("Alex", "Accepté"));
+        passagers.add(new Passager("PEDRO"));
+        mAdapter = new AdapterPassager(passagers, this::changeStatus);
+        recyclerViewPassagers.setAdapter(mAdapter);
         remplirInfoTrajet();
         return view;
+    }
+
+    private void changeStatus(Passager passager, int status) {
+        Snackbar.make(container, passager.getNom() + " " + status , Snackbar.LENGTH_LONG).show();
     }
 
     private void remplirInfoTrajet() {
