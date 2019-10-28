@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import me.dioxo.covoiturage.Fragments.AllerFragment;
 import me.dioxo.covoiturage.Fragments.AllerFragmentView;
+import me.dioxo.covoiturage.Fragments.ConduireFragment;
 import me.dioxo.covoiturage.Fragments.HomeFragment;
 import me.dioxo.covoiturage.Fragments.ProposerTrajetFragment;
 import me.dioxo.covoiturage.Fragments.RechercherTrajetFragment;
@@ -21,7 +22,8 @@ import me.dioxo.covoiturage.Fragments.RechercherTrajetFragment;
 public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener,
                                         RechercherTrajetFragment.OnFragmentInteractionListener,
                                         ProposerTrajetFragment.OnFragmentInteractionListener,
-                                        AllerFragment.OnFragmentInteractionListener {
+                                        AllerFragment.OnFragmentInteractionListener ,
+                                        ConduireFragment.OnFragmentInteractionListener{
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener(){
@@ -30,9 +32,6 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             Fragment selectedFragment = null;
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    selectedFragment = new HomeFragment();
-                    break;
                 case R.id.navigation_rechercher_trajet:
                     selectedFragment = new RechercherTrajetFragment();
                     break;
@@ -42,9 +41,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
                 case R.id.navigation_mes_trajets_passager:
                     selectedFragment = new AllerFragment();
                     break;
-                /*case R.id.navigation_mes_trajets_conducteur:
-
-                    break;*/
+                case R.id.navigation_mes_trajets_conducteur:
+                    selectedFragment = new ConduireFragment();
+                    break;
+                default:
+                    selectedFragment = new HomeFragment();
+                    break;
             }
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

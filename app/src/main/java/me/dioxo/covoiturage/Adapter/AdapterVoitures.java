@@ -111,10 +111,17 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
 
             case 1: afficherAller(holder, position);
                 break;
+            case 2: afficherConduire(holder, position);
         }
 
 
 
+    }
+
+    private void afficherConduire(MyViewHolder holder, int position) {
+        holder.btnOptions.setText("Plus d'information");
+        holder.btnCancel.setVisibility(View.GONE);
+        holder.btnOptions.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
     }
 
     private void afficherAller(MyViewHolder holder, int position) {
