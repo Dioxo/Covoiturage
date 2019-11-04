@@ -23,8 +23,11 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.dioxo.covoiturage.Adapter.AdapterPassager;
+import me.dioxo.covoiturage.Adapter.AdapterVoitures;
 import me.dioxo.covoiturage.Objets.Passager;
 import me.dioxo.covoiturage.Objets.Trajet;
+import me.dioxo.covoiturage.Presenter.InfoTrajetPresenter;
+import me.dioxo.covoiturage.Presenter.InfoTrajetPresenterImpl;
 import me.dioxo.covoiturage.R;
 
 /**
@@ -35,7 +38,7 @@ import me.dioxo.covoiturage.R;
  * Use the {@link InfoTrajetFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InfoTrajetFragment extends Fragment {
+public class InfoTrajetFragment extends Fragment implements InfoTrajetView {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -63,6 +66,8 @@ public class InfoTrajetFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private Trajet trajet;
+
+    private InfoTrajetPresenter presenter;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -108,16 +113,10 @@ public class InfoTrajetFragment extends Fragment {
         ButterKnife.bind(this, view);
 
 
-        recyclerViewPassagers.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerViewPassagers.setLayoutManager(layoutManager);
 
-        ArrayList<Passager> passagers = new ArrayList<>();
-        passagers.add(new Passager("Alex", "Accepté"));
-        passagers.add(new Passager("PEDRO"));
-        mAdapter = new AdapterPassager(passagers, this::changeStatus);
-        recyclerViewPassagers.setAdapter(mAdapter);
         remplirInfoTrajet();
+        presenter = new InfoTrajetPresenterImpl(this);
+        presenter.cherecherPassagers(trajet);
         return view;
     }
 
@@ -164,6 +163,27 @@ public class InfoTrajetFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void afficherTrajets(ArrayList<Passager> passagers) {
+        if (passagers.size() == 0) {
+            //Il n'y a pas de trajets
+            showError("Vous avez pas de trajets à faire");
+        } else {
+            recyclerViewPassagers.setHasFixedSize(true);
+            layoutManager = new LinearLayoutManager(getContext());
+            recyclerViewPassagers.setLayoutManager(layoutManager);
+
+            mAdapter = new AdapterPassager(passagers, this::changeStatus);
+            recyclerViewPassagers.setAdapter(mAdapter);
+
+        }
+    }
+
+    @Override
+    public void showError(String message) {
+        Snackbar.make(container, message, Snackbar.LENGTH_LONG).show();
     }
 
     /**
