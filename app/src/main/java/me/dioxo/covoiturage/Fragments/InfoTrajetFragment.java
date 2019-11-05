@@ -116,8 +116,15 @@ public class InfoTrajetFragment extends Fragment implements InfoTrajetView {
 
         remplirInfoTrajet();
         presenter = new InfoTrajetPresenterImpl(this);
+        presenter.onCreate();
         presenter.cherecherPassagers(trajet);
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
     }
 
     private void changeStatus(Passager passager, int status) {
@@ -166,10 +173,10 @@ public class InfoTrajetFragment extends Fragment implements InfoTrajetView {
     }
 
     @Override
-    public void afficherTrajets(ArrayList<Passager> passagers) {
+    public void afficherPassagers(ArrayList<Passager> passagers) {
         if (passagers.size() == 0) {
-            //Il n'y a pas de trajets
-            showError("Vous avez pas de trajets à faire");
+            //Il n'y a pas de passagers
+            showError("Vous n'avez pas encore de passagers");
         } else {
             recyclerViewPassagers.setHasFixedSize(true);
             layoutManager = new LinearLayoutManager(getContext());

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import me.dioxo.covoiturage.Objets.Passager;
 public interface InfoTrajetView {
-    void afficherTrajets(ArrayList<Passager> passagers);
+    void afficherPassagers(ArrayList<Passager> passagers);
     void showError(String message);
 
 }
