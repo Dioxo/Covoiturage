@@ -128,7 +128,7 @@ public class InfoTrajetFragment extends Fragment implements InfoTrajetView {
     }
 
     private void changeStatus(Passager passager, int status) {
-        Snackbar.make(container, passager.getNom() + " " + status , Snackbar.LENGTH_LONG).show();
+        presenter.modifyStatus(trajet, passager, status);
     }
 
     private void remplirInfoTrajet() {

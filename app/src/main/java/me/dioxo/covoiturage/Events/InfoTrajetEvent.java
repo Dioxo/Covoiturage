@@ -7,8 +7,8 @@ import me.dioxo.covoiturage.Objets.Passager;
 public class InfoTrajetEvent {
     public static final int CHERCHER_ERROR = 0;
     public static final int CHERCHER_SUCCESS = 1;
-    public static final int CANCELER_ERROR = 2;
-    public static final int CANCELER_SUCCESS = 3;
+    public static final int CHANGE_STATUS_SUCCESS= 2;
+    public static final int CHANGE_STATUS_ERROR = 3;
 
     private int eventType;
     private ArrayList<Passager> passagers;

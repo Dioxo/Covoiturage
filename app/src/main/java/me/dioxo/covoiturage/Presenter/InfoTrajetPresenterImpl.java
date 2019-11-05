@@ -43,6 +43,8 @@ public class InfoTrajetPresenterImpl implements InfoTrajetPresenter {
                 break;
 
             case InfoTrajetEvent.CHERCHER_ERROR:
+            case InfoTrajetEvent.CHANGE_STATUS_ERROR:
+            case InfoTrajetEvent.CHANGE_STATUS_SUCCESS:
                 if (view != null){
                     view.showError(event.getError());
                 }
@@ -53,8 +55,8 @@ public class InfoTrajetPresenterImpl implements InfoTrajetPresenter {
     }
 
     @Override
-    public void modifyStatus(Passager passager, int status) {
-
+    public void modifyStatus(Trajet trajet, Passager passager, int status) {
+        model.modifyStatus(trajet, passager, status);
     }
 
     @Override

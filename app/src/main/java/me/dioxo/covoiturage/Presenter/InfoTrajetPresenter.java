@@ -12,7 +12,7 @@ public interface InfoTrajetPresenter {
     void onDestroy();
     void onEventMainThread(InfoTrajetEvent event);
 
-    void modifyStatus(Passager passager, int status);
+    void modifyStatus(Trajet trajet, Passager passager, int status);
     void cherecherPassagers(Trajet trajet);
 
     void afficherPassagers(ArrayList<Passager> passagers);
