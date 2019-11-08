@@ -125,7 +125,12 @@ public class AdapterVoitures extends RecyclerView.Adapter<AdapterVoitures.MyView
     }
 
     private void afficherAller(MyViewHolder holder, int position) {
-        holder.btnOptions.setText("Status : " + trajets.get(position).getStatus());
+        if(trajets.get(position).getStatus() != null){
+            holder.btnOptions.setText("Status : " + trajets.get(position).getStatus());
+        }else{
+            holder.btnOptions.setText("Status : En attente de confirmation");
+        }
+
         holder.btnCancel.setVisibility(View.VISIBLE);
 
         holder.btnCancel.setOnClickListener(view -> listener.onBtnClicked(trajets.get(position)));
