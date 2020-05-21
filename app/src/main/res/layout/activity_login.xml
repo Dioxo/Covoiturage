@@ -51,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/edtIdUser" />
 
     <Button
+        android:text="Entrer"
         android:id="@+id/btnEntrer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
